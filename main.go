@@ -1,10 +1,7 @@
 package main
 
 import (
-	"log"
 	"net/http"
-
-	//"time"
 
 	"github.com/gin-gonic/gin"
 	"golang.org/x/time/rate"
@@ -25,9 +22,7 @@ func RateLimiter() gin.HandlerFunc {
 	limiter := rate.NewLimiter(1, 4)
 	return func(c *gin.Context) {
 
-		// Check if the request is allowed by the rate limiter.
 		if limiter.Allow() {
-			log.Println("Allow access")
 			c.Next()
 		} else {
 			c.JSON(http.StatusTooManyRequests, gin.H{
